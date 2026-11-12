@@ -9,9 +9,9 @@ import (
 	"io"
 )
 
-/**
- * Model for initing client
- */
+// Description:
+//
+// Model for initing client
 type Config struct {
 	// accesskey id
 	AccessKeyId *string `json:"accessKeyId,omitempty" xml:"accessKeyId,omitempty"`
@@ -20,26 +20,66 @@ type Config struct {
 	// security token
 	SecurityToken *string `json:"securityToken,omitempty" xml:"securityToken,omitempty"`
 	// http protocol
+	//
+	// example:
+	//
+	// http
 	Protocol *string `json:"protocol,omitempty" xml:"protocol,omitempty"`
 	// read timeout
+	//
+	// example:
+	//
+	// 10
 	ReadTimeout *int `json:"readTimeout,omitempty" xml:"readTimeout,omitempty"`
 	// connect timeout
+	//
+	// example:
+	//
+	// 10
 	ConnectTimeout *int `json:"connectTimeout,omitempty" xml:"connectTimeout,omitempty"`
 	// http proxy
+	//
+	// example:
+	//
+	// http://localhost
 	HttpProxy *string `json:"httpProxy,omitempty" xml:"httpProxy,omitempty"`
 	// https proxy
+	//
+	// example:
+	//
+	// https://localhost
 	HttpsProxy *string `json:"httpsProxy,omitempty" xml:"httpsProxy,omitempty"`
 	// endpoint
+	//
+	// example:
+	//
+	// cs.aliyuncs.com
 	Endpoint *string `json:"endpoint,omitempty" xml:"endpoint,omitempty"`
 	// proxy white list
+	//
+	// example:
+	//
+	// http://localhost
 	NoProxy *string `json:"noProxy,omitempty" xml:"noProxy,omitempty"`
 	// max idle conns
+	//
+	// example:
+	//
+	// 3
 	MaxIdleConns *int `json:"maxIdleConns,omitempty" xml:"maxIdleConns,omitempty"`
 	// user agent
+	//
+	// example:
+	//
+	// Alibabacloud/1
 	UserAgent *string `json:"userAgent,omitempty" xml:"userAgent,omitempty"`
 	// socks5 proxy
 	Socks5Proxy *string `json:"socks5Proxy,omitempty" xml:"socks5Proxy,omitempty"`
 	// socks5 network
+	//
+	// example:
+	//
+	// TCP
 	Socks5NetWork *string `json:"socks5NetWork,omitempty" xml:"socks5NetWork,omitempty"`
 	// 长链接最大空闲时长
 	MaxIdleTimeMillis *int `json:"maxIdleTimeMillis,omitempty" xml:"maxIdleTimeMillis,omitempty"`
@@ -152,10 +192,19 @@ func (s *Config) SetMaxRequestsPerHost(v int) *Config {
 // 产品对应模版字段
 type TemplateContext struct {
 	// 模版header头
+	// example:
+	//
+	// bizCode
 	HeadName *string `json:"head_name,omitempty" xml:"head_name,omitempty" require:"true"`
 	// 字段描述
+	// example:
+	//
+	// 加密身份id
 	Remark *string `json:"remark,omitempty" xml:"remark,omitempty"`
 	// 是否为必填:REQUIRED,ONE_OF
+	// example:
+	//
+	// ONE_OF
 	RequireType *string `json:"require_type,omitempty" xml:"require_type,omitempty" require:"true"`
 }
 
@@ -182,15 +231,98 @@ func (s *TemplateContext) SetRequireType(v string) *TemplateContext {
 	return s
 }
 
+// 最好结果
+type BestModelReport struct {
+	// ks信息
+	// example:
+	//
+	// 0.52
+	Ks *string `json:"ks,omitempty" xml:"ks,omitempty"`
+	// auc指标
+	// example:
+	//
+	// 0.8
+	Auc *string `json:"auc,omitempty" xml:"auc,omitempty"`
+	// lift指标
+	// example:
+	//
+	// 3.2
+	Lift *string `json:"lift,omitempty" xml:"lift,omitempty"`
+}
+
+func (s BestModelReport) String() string {
+	return tea.Prettify(s)
+}
+
+func (s BestModelReport) GoString() string {
+	return s.String()
+}
+
+func (s *BestModelReport) SetKs(v string) *BestModelReport {
+	s.Ks = &v
+	return s
+}
+
+func (s *BestModelReport) SetAuc(v string) *BestModelReport {
+	s.Auc = &v
+	return s
+}
+
+func (s *BestModelReport) SetLift(v string) *BestModelReport {
+	s.Lift = &v
+	return s
+}
+
+// IV信息列表
+type IvInfo struct {
+	// 轮次
+	// example:
+	//
+	// 基线
+	Round *string `json:"round,omitempty" xml:"round,omitempty"`
+	// oss下载链接
+	// example:
+	//
+	// https://antchain-joint-modeling-poc-sh.oss-cn-shanghai.aliyuncs.com/poc
+	FeatureReport *string `json:"feature_report,omitempty" xml:"feature_report,omitempty"`
+}
+
+func (s IvInfo) String() string {
+	return tea.Prettify(s)
+}
+
+func (s IvInfo) GoString() string {
+	return s.String()
+}
+
+func (s *IvInfo) SetRound(v string) *IvInfo {
+	s.Round = &v
+	return s
+}
+
+func (s *IvInfo) SetFeatureReport(v string) *IvInfo {
+	s.FeatureReport = &v
+	return s
+}
+
 // 产品信息
 type ProductContext struct {
 	// 产品code
+	// example:
+	//
+	// aft_v4
 	ProductCode *string `json:"product_code,omitempty" xml:"product_code,omitempty" require:"true"`
 	// 模版code
+	// example:
+	//
+	// tb-default
 	TemplateCode *string `json:"template_code,omitempty" xml:"template_code,omitempty" require:"true"`
 	// 模版内容,数组
 	TemplateContext []*TemplateContext `json:"template_context,omitempty" xml:"template_context,omitempty" require:"true" type:"Repeated"`
 	// 产品模型结果字段
+	// example:
+	//
+	// ["aft_v3_score","aft_v4_score"]
 	ScoreFields []*string `json:"score_fields,omitempty" xml:"score_fields,omitempty" require:"true" type:"Repeated"`
 }
 
@@ -222,13 +354,91 @@ func (s *ProductContext) SetScoreFields(v []*string) *ProductContext {
 	return s
 }
 
+// 产品拓展字段信息
+type ProductExtContext struct {
+	// 产品code
+	// example:
+	//
+	// MD-CpFJeF0DAAABl4MFvUs
+	ProductCode *string `json:"product_code,omitempty" xml:"product_code,omitempty" require:"true"`
+	// 产品名
+	// example:
+	//
+	// 小微分
+	ProductName *string `json:"product_name,omitempty" xml:"product_name,omitempty" require:"true"`
+	// 模版code
+	// example:
+	//
+	// tb-default
+	TemplateCode *string `json:"template_code,omitempty" xml:"template_code,omitempty" require:"true"`
+	// 模版内容,数组
+	TemplateContext []*TemplateContext `json:"template_context,omitempty" xml:"template_context,omitempty" require:"true" type:"Repeated"`
+	// 产品模型结果字段
+	// example:
+	//
+	// ["aft_v3_score","aft_v4_score"]
+	ScoreFields []*string `json:"score_fields,omitempty" xml:"score_fields,omitempty" require:"true" type:"Repeated"`
+	// 返回样本模版文件下载url
+	// example:
+	//
+	// http://oss
+	TemplateFileDownUrl *string `json:"template_file_down_url,omitempty" xml:"template_file_down_url,omitempty" require:"true"`
+}
+
+func (s ProductExtContext) String() string {
+	return tea.Prettify(s)
+}
+
+func (s ProductExtContext) GoString() string {
+	return s.String()
+}
+
+func (s *ProductExtContext) SetProductCode(v string) *ProductExtContext {
+	s.ProductCode = &v
+	return s
+}
+
+func (s *ProductExtContext) SetProductName(v string) *ProductExtContext {
+	s.ProductName = &v
+	return s
+}
+
+func (s *ProductExtContext) SetTemplateCode(v string) *ProductExtContext {
+	s.TemplateCode = &v
+	return s
+}
+
+func (s *ProductExtContext) SetTemplateContext(v []*TemplateContext) *ProductExtContext {
+	s.TemplateContext = v
+	return s
+}
+
+func (s *ProductExtContext) SetScoreFields(v []*string) *ProductExtContext {
+	s.ScoreFields = v
+	return s
+}
+
+func (s *ProductExtContext) SetTemplateFileDownUrl(v string) *ProductExtContext {
+	s.TemplateFileDownUrl = &v
+	return s
+}
+
 // corlab任务查询结果信息
 type ResultContext struct {
 	// 产品码
+	// example:
+	//
+	// aft_v4
 	ProductCode *string `json:"product_code,omitempty" xml:"product_code,omitempty"`
+	// 结果文件名
+	// example:
+	//
 	// 结果文件名
 	FileName *string `json:"file_name,omitempty" xml:"file_name,omitempty"`
 	// 结果文件下载地址
+	// example:
+	//
+	// oss://xxxxx/xxxx
 	FileUrl *string `json:"file_url,omitempty" xml:"file_url,omitempty"`
 }
 
@@ -258,8 +468,14 @@ func (s *ResultContext) SetFileUrl(v string) *ResultContext {
 // 键值对
 type XNameValuePair struct {
 	// 键名
+	// example:
+	//
+	// key
 	Name *string `json:"name,omitempty" xml:"name,omitempty" require:"true"`
 	// 键值
+	// example:
+	//
+	// value
 	Value *string `json:"value,omitempty" xml:"value,omitempty" require:"true"`
 }
 
@@ -820,6 +1036,363 @@ func (s *QueryModelbackProductResponse) SetProductContext(v []*ProductContext) *
 	return s
 }
 
+type CreateFeatureminingPlanRequest struct {
+	// OAuth模式下的授权token
+	AuthToken         *string `json:"auth_token,omitempty" xml:"auth_token,omitempty"`
+	ProductInstanceId *string `json:"product_instance_id,omitempty" xml:"product_instance_id,omitempty"`
+	// 数据来源
+	DataSource *string `json:"data_source,omitempty" xml:"data_source,omitempty" require:"true"`
+	// 业务领域
+	RiskDomain *string `json:"risk_domain,omitempty" xml:"risk_domain,omitempty" require:"true"`
+	// 业务版块
+	RiskCategory *string `json:"risk_category,omitempty" xml:"risk_category,omitempty" require:"true"`
+	// 业务场景
+	RiskScene *string `json:"risk_scene,omitempty" xml:"risk_scene,omitempty" require:"true"`
+	// agent目标导向
+	DemandDetail *string `json:"demand_detail,omitempty" xml:"demand_detail,omitempty"`
+	// 交易表/浏览表
+	DependTables *string `json:"depend_tables,omitempty" xml:"depend_tables,omitempty" require:"true"`
+	// 运行小时数
+	RunHours *int64 `json:"run_hours,omitempty" xml:"run_hours,omitempty" require:"true"`
+	// 15
+	RunMinutes *int64 `json:"run_minutes,omitempty" xml:"run_minutes,omitempty"`
+	// 100
+	FeatureNum *int64 `json:"feature_num,omitempty" xml:"feature_num,omitempty" require:"true"`
+	// iv要求
+	Iv *string `json:"iv,omitempty" xml:"iv,omitempty"`
+	// 1702
+	// 待上传文件
+	FileObject io.Reader `json:"fileObject,omitempty" xml:"fileObject,omitempty"`
+	// 待上传文件名
+	FileObjectName *string `json:"fileObjectName,omitempty" xml:"fileObjectName,omitempty"`
+	FileId         *int64  `json:"file_id,omitempty" xml:"file_id,omitempty" require:"true"`
+	// 客群
+	CustomerGroup *string `json:"customer_group,omitempty" xml:"customer_group,omitempty"`
+	// 是否进行模型评估
+	ModelEvaluate *bool `json:"model_evaluate,omitempty" xml:"model_evaluate,omitempty" require:"true"`
+	// 基模选择
+	BasicModel *string `json:"basic_model,omitempty" xml:"basic_model,omitempty" require:"true"`
+	// baseLine信息
+	BaseLineIds []*int64 `json:"base_line_ids,omitempty" xml:"base_line_ids,omitempty" require:"true" type:"Repeated"`
+	// 结果判断，后期使用
+	Direction *string `json:"direction,omitempty" xml:"direction,omitempty"`
+	// 计划开始时间
+	StartDate *string `json:"start_date,omitempty" xml:"start_date,omitempty" require:"true"`
+	// 结束时间
+	EndDate *string `json:"end_date,omitempty" xml:"end_date,omitempty"`
+}
+
+func (s CreateFeatureminingPlanRequest) String() string {
+	return tea.Prettify(s)
+}
+
+func (s CreateFeatureminingPlanRequest) GoString() string {
+	return s.String()
+}
+
+func (s *CreateFeatureminingPlanRequest) SetAuthToken(v string) *CreateFeatureminingPlanRequest {
+	s.AuthToken = &v
+	return s
+}
+
+func (s *CreateFeatureminingPlanRequest) SetProductInstanceId(v string) *CreateFeatureminingPlanRequest {
+	s.ProductInstanceId = &v
+	return s
+}
+
+func (s *CreateFeatureminingPlanRequest) SetDataSource(v string) *CreateFeatureminingPlanRequest {
+	s.DataSource = &v
+	return s
+}
+
+func (s *CreateFeatureminingPlanRequest) SetRiskDomain(v string) *CreateFeatureminingPlanRequest {
+	s.RiskDomain = &v
+	return s
+}
+
+func (s *CreateFeatureminingPlanRequest) SetRiskCategory(v string) *CreateFeatureminingPlanRequest {
+	s.RiskCategory = &v
+	return s
+}
+
+func (s *CreateFeatureminingPlanRequest) SetRiskScene(v string) *CreateFeatureminingPlanRequest {
+	s.RiskScene = &v
+	return s
+}
+
+func (s *CreateFeatureminingPlanRequest) SetDemandDetail(v string) *CreateFeatureminingPlanRequest {
+	s.DemandDetail = &v
+	return s
+}
+
+func (s *CreateFeatureminingPlanRequest) SetDependTables(v string) *CreateFeatureminingPlanRequest {
+	s.DependTables = &v
+	return s
+}
+
+func (s *CreateFeatureminingPlanRequest) SetRunHours(v int64) *CreateFeatureminingPlanRequest {
+	s.RunHours = &v
+	return s
+}
+
+func (s *CreateFeatureminingPlanRequest) SetRunMinutes(v int64) *CreateFeatureminingPlanRequest {
+	s.RunMinutes = &v
+	return s
+}
+
+func (s *CreateFeatureminingPlanRequest) SetFeatureNum(v int64) *CreateFeatureminingPlanRequest {
+	s.FeatureNum = &v
+	return s
+}
+
+func (s *CreateFeatureminingPlanRequest) SetIv(v string) *CreateFeatureminingPlanRequest {
+	s.Iv = &v
+	return s
+}
+
+func (s *CreateFeatureminingPlanRequest) SetFileObject(v io.Reader) *CreateFeatureminingPlanRequest {
+	s.FileObject = v
+	return s
+}
+
+func (s *CreateFeatureminingPlanRequest) SetFileObjectName(v string) *CreateFeatureminingPlanRequest {
+	s.FileObjectName = &v
+	return s
+}
+
+func (s *CreateFeatureminingPlanRequest) SetFileId(v int64) *CreateFeatureminingPlanRequest {
+	s.FileId = &v
+	return s
+}
+
+func (s *CreateFeatureminingPlanRequest) SetCustomerGroup(v string) *CreateFeatureminingPlanRequest {
+	s.CustomerGroup = &v
+	return s
+}
+
+func (s *CreateFeatureminingPlanRequest) SetModelEvaluate(v bool) *CreateFeatureminingPlanRequest {
+	s.ModelEvaluate = &v
+	return s
+}
+
+func (s *CreateFeatureminingPlanRequest) SetBasicModel(v string) *CreateFeatureminingPlanRequest {
+	s.BasicModel = &v
+	return s
+}
+
+func (s *CreateFeatureminingPlanRequest) SetBaseLineIds(v []*int64) *CreateFeatureminingPlanRequest {
+	s.BaseLineIds = v
+	return s
+}
+
+func (s *CreateFeatureminingPlanRequest) SetDirection(v string) *CreateFeatureminingPlanRequest {
+	s.Direction = &v
+	return s
+}
+
+func (s *CreateFeatureminingPlanRequest) SetStartDate(v string) *CreateFeatureminingPlanRequest {
+	s.StartDate = &v
+	return s
+}
+
+func (s *CreateFeatureminingPlanRequest) SetEndDate(v string) *CreateFeatureminingPlanRequest {
+	s.EndDate = &v
+	return s
+}
+
+type CreateFeatureminingPlanResponse struct {
+	// 请求唯一ID，用于链路跟踪和问题排查
+	ReqMsgId *string `json:"req_msg_id,omitempty" xml:"req_msg_id,omitempty"`
+	// 结果码，一般OK表示调用成功
+	ResultCode *string `json:"result_code,omitempty" xml:"result_code,omitempty"`
+	// 异常信息的文本描述
+	ResultMsg *string `json:"result_msg,omitempty" xml:"result_msg,omitempty"`
+	// 计划ID
+	PlanNo *string `json:"plan_no,omitempty" xml:"plan_no,omitempty"`
+	// RUNNING/SUCCESS/FAILED
+	Status *string `json:"status,omitempty" xml:"status,omitempty"`
+}
+
+func (s CreateFeatureminingPlanResponse) String() string {
+	return tea.Prettify(s)
+}
+
+func (s CreateFeatureminingPlanResponse) GoString() string {
+	return s.String()
+}
+
+func (s *CreateFeatureminingPlanResponse) SetReqMsgId(v string) *CreateFeatureminingPlanResponse {
+	s.ReqMsgId = &v
+	return s
+}
+
+func (s *CreateFeatureminingPlanResponse) SetResultCode(v string) *CreateFeatureminingPlanResponse {
+	s.ResultCode = &v
+	return s
+}
+
+func (s *CreateFeatureminingPlanResponse) SetResultMsg(v string) *CreateFeatureminingPlanResponse {
+	s.ResultMsg = &v
+	return s
+}
+
+func (s *CreateFeatureminingPlanResponse) SetPlanNo(v string) *CreateFeatureminingPlanResponse {
+	s.PlanNo = &v
+	return s
+}
+
+func (s *CreateFeatureminingPlanResponse) SetStatus(v string) *CreateFeatureminingPlanResponse {
+	s.Status = &v
+	return s
+}
+
+type QueryFeatureminingPlanRequest struct {
+	// OAuth模式下的授权token
+	AuthToken         *string `json:"auth_token,omitempty" xml:"auth_token,omitempty"`
+	ProductInstanceId *string `json:"product_instance_id,omitempty" xml:"product_instance_id,omitempty"`
+	// 特征计划任务ID
+	PlanNo *string `json:"plan_no,omitempty" xml:"plan_no,omitempty" require:"true"`
+}
+
+func (s QueryFeatureminingPlanRequest) String() string {
+	return tea.Prettify(s)
+}
+
+func (s QueryFeatureminingPlanRequest) GoString() string {
+	return s.String()
+}
+
+func (s *QueryFeatureminingPlanRequest) SetAuthToken(v string) *QueryFeatureminingPlanRequest {
+	s.AuthToken = &v
+	return s
+}
+
+func (s *QueryFeatureminingPlanRequest) SetProductInstanceId(v string) *QueryFeatureminingPlanRequest {
+	s.ProductInstanceId = &v
+	return s
+}
+
+func (s *QueryFeatureminingPlanRequest) SetPlanNo(v string) *QueryFeatureminingPlanRequest {
+	s.PlanNo = &v
+	return s
+}
+
+type QueryFeatureminingPlanResponse struct {
+	// 请求唯一ID，用于链路跟踪和问题排查
+	ReqMsgId *string `json:"req_msg_id,omitempty" xml:"req_msg_id,omitempty"`
+	// 结果码，一般OK表示调用成功
+	ResultCode *string `json:"result_code,omitempty" xml:"result_code,omitempty"`
+	// 异常信息的文本描述
+	ResultMsg *string `json:"result_msg,omitempty" xml:"result_msg,omitempty"`
+	// IV信息，包含每轮信息和特征挖掘报告下载链接
+	IvInfo []*IvInfo `json:"iv_info,omitempty" xml:"iv_info,omitempty" type:"Repeated"`
+	// 最好模型效果报告
+	BestModelReport *BestModelReport `json:"best_model_report,omitempty" xml:"best_model_report,omitempty"`
+}
+
+func (s QueryFeatureminingPlanResponse) String() string {
+	return tea.Prettify(s)
+}
+
+func (s QueryFeatureminingPlanResponse) GoString() string {
+	return s.String()
+}
+
+func (s *QueryFeatureminingPlanResponse) SetReqMsgId(v string) *QueryFeatureminingPlanResponse {
+	s.ReqMsgId = &v
+	return s
+}
+
+func (s *QueryFeatureminingPlanResponse) SetResultCode(v string) *QueryFeatureminingPlanResponse {
+	s.ResultCode = &v
+	return s
+}
+
+func (s *QueryFeatureminingPlanResponse) SetResultMsg(v string) *QueryFeatureminingPlanResponse {
+	s.ResultMsg = &v
+	return s
+}
+
+func (s *QueryFeatureminingPlanResponse) SetIvInfo(v []*IvInfo) *QueryFeatureminingPlanResponse {
+	s.IvInfo = v
+	return s
+}
+
+func (s *QueryFeatureminingPlanResponse) SetBestModelReport(v *BestModelReport) *QueryFeatureminingPlanResponse {
+	s.BestModelReport = v
+	return s
+}
+
+type QueryModelbackProductextRequest struct {
+	// OAuth模式下的授权token
+	AuthToken         *string `json:"auth_token,omitempty" xml:"auth_token,omitempty"`
+	ProductInstanceId *string `json:"product_instance_id,omitempty" xml:"product_instance_id,omitempty"`
+	// 通过产品Code查询出相关产品的产品名、模版字段等信息
+	ProductCodes []*string `json:"product_codes,omitempty" xml:"product_codes,omitempty" require:"true" type:"Repeated"`
+}
+
+func (s QueryModelbackProductextRequest) String() string {
+	return tea.Prettify(s)
+}
+
+func (s QueryModelbackProductextRequest) GoString() string {
+	return s.String()
+}
+
+func (s *QueryModelbackProductextRequest) SetAuthToken(v string) *QueryModelbackProductextRequest {
+	s.AuthToken = &v
+	return s
+}
+
+func (s *QueryModelbackProductextRequest) SetProductInstanceId(v string) *QueryModelbackProductextRequest {
+	s.ProductInstanceId = &v
+	return s
+}
+
+func (s *QueryModelbackProductextRequest) SetProductCodes(v []*string) *QueryModelbackProductextRequest {
+	s.ProductCodes = v
+	return s
+}
+
+type QueryModelbackProductextResponse struct {
+	// 请求唯一ID，用于链路跟踪和问题排查
+	ReqMsgId *string `json:"req_msg_id,omitempty" xml:"req_msg_id,omitempty"`
+	// 结果码，一般OK表示调用成功
+	ResultCode *string `json:"result_code,omitempty" xml:"result_code,omitempty"`
+	// 异常信息的文本描述
+	ResultMsg *string `json:"result_msg,omitempty" xml:"result_msg,omitempty"`
+	// 产品内容
+	ProductContext *ProductExtContext `json:"product_context,omitempty" xml:"product_context,omitempty"`
+}
+
+func (s QueryModelbackProductextResponse) String() string {
+	return tea.Prettify(s)
+}
+
+func (s QueryModelbackProductextResponse) GoString() string {
+	return s.String()
+}
+
+func (s *QueryModelbackProductextResponse) SetReqMsgId(v string) *QueryModelbackProductextResponse {
+	s.ReqMsgId = &v
+	return s
+}
+
+func (s *QueryModelbackProductextResponse) SetResultCode(v string) *QueryModelbackProductextResponse {
+	s.ResultCode = &v
+	return s
+}
+
+func (s *QueryModelbackProductextResponse) SetResultMsg(v string) *QueryModelbackProductextResponse {
+	s.ResultMsg = &v
+	return s
+}
+
+func (s *QueryModelbackProductextResponse) SetProductContext(v *ProductExtContext) *QueryModelbackProductextResponse {
+	s.ProductContext = v
+	return s
+}
+
 type CreateAntcloudGatewayxFileUploadRequest struct {
 	// OAuth模式下的授权token
 	AuthToken *string `json:"auth_token,omitempty" xml:"auth_token,omitempty"`
@@ -962,10 +1535,11 @@ type Client struct {
 	MaxRequestsPerHost      *int
 }
 
-/**
- * Init client with Config
- * @param config config contains the necessary information to create a client
- */
+// Description:
+//
+// # Init client with Config
+//
+// @param config - config contains the necessary information to create a client
 func NewClient(config *Config) (*Client, error) {
 	client := new(Client)
 	err := client.Init(config)
@@ -973,7 +1547,7 @@ func NewClient(config *Config) (*Client, error) {
 }
 
 func (client *Client) Init(config *Config) (_err error) {
-	if tea.BoolValue(util.IsUnset(tea.ToMap(config))) {
+	if tea.BoolValue(util.IsUnset(config)) {
 		_err = tea.NewSDKError(map[string]interface{}{
 			"code":    "ParameterMissing",
 			"message": "'config' can not be unset",
@@ -1002,16 +1576,23 @@ func (client *Client) Init(config *Config) (_err error) {
 	return nil
 }
 
-/**
- * Encapsulate the request and invoke the network
- * @param action api name
- * @param protocol http or https
- * @param method e.g. GET
- * @param pathname pathname of every api
- * @param request which contains request params
- * @param runtime which controls some details of call api, such as retry times
- * @return the response
- */
+// Description:
+//
+// # Encapsulate the request and invoke the network
+//
+// @param action - api name
+//
+// @param protocol - http or https
+//
+// @param method - e.g. GET
+//
+// @param pathname - pathname of every api
+//
+// @param request - which contains request params
+//
+// @param runtime - which controls some details of call api, such as retry times
+//
+// @return the response
 func (client *Client) DoRequest(version *string, action *string, protocol *string, method *string, pathname *string, request map[string]interface{}, headers map[string]*string, runtime *util.RuntimeOptions) (_result map[string]interface{}, _err error) {
 	_err = tea.Validate(runtime)
 	if _err != nil {
@@ -1062,7 +1643,7 @@ func (client *Client) DoRequest(version *string, action *string, protocol *strin
 				"req_msg_id":       antchainutil.GetNonce(),
 				"access_key":       client.AccessKeyId,
 				"base_sdk_version": tea.String("TeaSDK-2.0"),
-				"sdk_version":      tea.String("1.0.19"),
+				"sdk_version":      tea.String("1.3.0"),
 				"_prod_code":       tea.String("CORLAB"),
 				"_prod_channel":    tea.String("default"),
 			}
@@ -1120,10 +1701,11 @@ func (client *Client) DoRequest(version *string, action *string, protocol *strin
 	return _resp, _err
 }
 
-/**
- * Description: 单次模型预测
- * Summary: 模型预测
- */
+// Description:
+//
+// Description: 单次模型预测
+//
+// Summary: 模型预测
 func (client *Client) RecognizeModel(request *RecognizeModelRequest) (_result *RecognizeModelResponse, _err error) {
 	runtime := &util.RuntimeOptions{}
 	headers := make(map[string]*string)
@@ -1136,10 +1718,11 @@ func (client *Client) RecognizeModel(request *RecognizeModelRequest) (_result *R
 	return _result, _err
 }
 
-/**
- * Description: 单次模型预测
- * Summary: 模型预测
- */
+// Description:
+//
+// Description: 单次模型预测
+//
+// Summary: 模型预测
 func (client *Client) RecognizeModelEx(request *RecognizeModelRequest, headers map[string]*string, runtime *util.RuntimeOptions) (_result *RecognizeModelResponse, _err error) {
 	_err = util.ValidateModel(request)
 	if _err != nil {
@@ -1154,10 +1737,11 @@ func (client *Client) RecognizeModelEx(request *RecognizeModelRequest, headers m
 	return _result, _err
 }
 
-/**
- * Description: 模型投产任务新增
- * Summary: 模型投产任务新增
- */
+// Description:
+//
+// Description: 模型投产任务新增
+//
+// Summary: 模型投产任务新增
 func (client *Client) AddModelTask(request *AddModelTaskRequest) (_result *AddModelTaskResponse, _err error) {
 	runtime := &util.RuntimeOptions{}
 	headers := make(map[string]*string)
@@ -1170,10 +1754,11 @@ func (client *Client) AddModelTask(request *AddModelTaskRequest) (_result *AddMo
 	return _result, _err
 }
 
-/**
- * Description: 模型投产任务新增
- * Summary: 模型投产任务新增
- */
+// Description:
+//
+// Description: 模型投产任务新增
+//
+// Summary: 模型投产任务新增
 func (client *Client) AddModelTaskEx(request *AddModelTaskRequest, headers map[string]*string, runtime *util.RuntimeOptions) (_result *AddModelTaskResponse, _err error) {
 	_err = util.ValidateModel(request)
 	if _err != nil {
@@ -1188,10 +1773,11 @@ func (client *Client) AddModelTaskEx(request *AddModelTaskRequest, headers map[s
 	return _result, _err
 }
 
-/**
- * Description: corlab模型回溯任务创建
- * Summary: corlab模型回溯任务创建
- */
+// Description:
+//
+// Description: corlab模型回溯任务创建
+//
+// Summary: corlab模型回溯任务创建
 func (client *Client) CreateModelbackTask(request *CreateModelbackTaskRequest) (_result *CreateModelbackTaskResponse, _err error) {
 	runtime := &util.RuntimeOptions{}
 	headers := make(map[string]*string)
@@ -1204,10 +1790,11 @@ func (client *Client) CreateModelbackTask(request *CreateModelbackTaskRequest) (
 	return _result, _err
 }
 
-/**
- * Description: corlab模型回溯任务创建
- * Summary: corlab模型回溯任务创建
- */
+// Description:
+//
+// Description: corlab模型回溯任务创建
+//
+// Summary: corlab模型回溯任务创建
 func (client *Client) CreateModelbackTaskEx(request *CreateModelbackTaskRequest, headers map[string]*string, runtime *util.RuntimeOptions) (_result *CreateModelbackTaskResponse, _err error) {
 	if !tea.BoolValue(util.IsUnset(request.FileObject)) {
 		uploadReq := &CreateAntcloudGatewayxFileUploadRequest{
@@ -1252,10 +1839,11 @@ func (client *Client) CreateModelbackTaskEx(request *CreateModelbackTaskRequest,
 	return _result, _err
 }
 
-/**
- * Description: corlab模型回溯任务查询
- * Summary: corlab模型回溯任务查询
- */
+// Description:
+//
+// Description: corlab模型回溯任务查询
+//
+// Summary: corlab模型回溯任务查询
 func (client *Client) QueryModelbackTask(request *QueryModelbackTaskRequest) (_result *QueryModelbackTaskResponse, _err error) {
 	runtime := &util.RuntimeOptions{}
 	headers := make(map[string]*string)
@@ -1268,10 +1856,11 @@ func (client *Client) QueryModelbackTask(request *QueryModelbackTaskRequest) (_r
 	return _result, _err
 }
 
-/**
- * Description: corlab模型回溯任务查询
- * Summary: corlab模型回溯任务查询
- */
+// Description:
+//
+// Description: corlab模型回溯任务查询
+//
+// Summary: corlab模型回溯任务查询
 func (client *Client) QueryModelbackTaskEx(request *QueryModelbackTaskRequest, headers map[string]*string, runtime *util.RuntimeOptions) (_result *QueryModelbackTaskResponse, _err error) {
 	_err = util.ValidateModel(request)
 	if _err != nil {
@@ -1286,10 +1875,11 @@ func (client *Client) QueryModelbackTaskEx(request *QueryModelbackTaskRequest, h
 	return _result, _err
 }
 
-/**
- * Description: corlab产品以及产品模版查询
- * Summary: corlab产品以及产品模版查询
- */
+// Description:
+//
+// Description: corlab产品以及产品模版查询
+//
+// Summary: corlab产品以及产品模版查询
 func (client *Client) QueryModelbackProduct(request *QueryModelbackProductRequest) (_result *QueryModelbackProductResponse, _err error) {
 	runtime := &util.RuntimeOptions{}
 	headers := make(map[string]*string)
@@ -1302,10 +1892,11 @@ func (client *Client) QueryModelbackProduct(request *QueryModelbackProductReques
 	return _result, _err
 }
 
-/**
- * Description: corlab产品以及产品模版查询
- * Summary: corlab产品以及产品模版查询
- */
+// Description:
+//
+// Description: corlab产品以及产品模版查询
+//
+// Summary: corlab产品以及产品模版查询
 func (client *Client) QueryModelbackProductEx(request *QueryModelbackProductRequest, headers map[string]*string, runtime *util.RuntimeOptions) (_result *QueryModelbackProductResponse, _err error) {
 	_err = util.ValidateModel(request)
 	if _err != nil {
@@ -1320,10 +1911,119 @@ func (client *Client) QueryModelbackProductEx(request *QueryModelbackProductRequ
 	return _result, _err
 }
 
-/**
- * Description: 创建HTTP PUT提交的文件上传
- * Summary: 文件上传创建
- */
+// Description:
+//
+// Description: 特征智探openAPI接口
+//
+// Summary: 特征智探openAPI接口
+func (client *Client) CreateFeatureminingPlan(request *CreateFeatureminingPlanRequest) (_result *CreateFeatureminingPlanResponse, _err error) {
+	runtime := &util.RuntimeOptions{}
+	headers := make(map[string]*string)
+	_result = &CreateFeatureminingPlanResponse{}
+	_body, _err := client.CreateFeatureminingPlanEx(request, headers, runtime)
+	if _err != nil {
+		return _result, _err
+	}
+	_result = _body
+	return _result, _err
+}
+
+// Description:
+//
+// Description: 特征智探openAPI接口
+//
+// Summary: 特征智探openAPI接口
+func (client *Client) CreateFeatureminingPlanEx(request *CreateFeatureminingPlanRequest, headers map[string]*string, runtime *util.RuntimeOptions) (_result *CreateFeatureminingPlanResponse, _err error) {
+	_err = util.ValidateModel(request)
+	if _err != nil {
+		return _result, _err
+	}
+	_result = &CreateFeatureminingPlanResponse{}
+	_body, _err := client.DoRequest(tea.String("1.0"), tea.String("antdigital.corlab.featuremining.plan.create"), tea.String("HTTPS"), tea.String("POST"), tea.String("/gateway.do"), tea.ToMap(request), headers, runtime)
+	if _err != nil {
+		return _result, _err
+	}
+	_err = tea.Convert(_body, &_result)
+	return _result, _err
+}
+
+// Description:
+//
+// Description: 特征智探结果查询
+//
+// Summary: 特征智探结果查询
+func (client *Client) QueryFeatureminingPlan(request *QueryFeatureminingPlanRequest) (_result *QueryFeatureminingPlanResponse, _err error) {
+	runtime := &util.RuntimeOptions{}
+	headers := make(map[string]*string)
+	_result = &QueryFeatureminingPlanResponse{}
+	_body, _err := client.QueryFeatureminingPlanEx(request, headers, runtime)
+	if _err != nil {
+		return _result, _err
+	}
+	_result = _body
+	return _result, _err
+}
+
+// Description:
+//
+// Description: 特征智探结果查询
+//
+// Summary: 特征智探结果查询
+func (client *Client) QueryFeatureminingPlanEx(request *QueryFeatureminingPlanRequest, headers map[string]*string, runtime *util.RuntimeOptions) (_result *QueryFeatureminingPlanResponse, _err error) {
+	_err = util.ValidateModel(request)
+	if _err != nil {
+		return _result, _err
+	}
+	_result = &QueryFeatureminingPlanResponse{}
+	_body, _err := client.DoRequest(tea.String("1.0"), tea.String("antdigital.corlab.featuremining.plan.query"), tea.String("HTTPS"), tea.String("POST"), tea.String("/gateway.do"), tea.ToMap(request), headers, runtime)
+	if _err != nil {
+		return _result, _err
+	}
+	_err = tea.Convert(_body, &_result)
+	return _result, _err
+}
+
+// Description:
+//
+// Description: 调用该产品接口，实现模型回溯产品相关信息查询
+//
+// Summary: 调用该产品接口，实现模型回溯产品相关信息查询
+func (client *Client) QueryModelbackProductext(request *QueryModelbackProductextRequest) (_result *QueryModelbackProductextResponse, _err error) {
+	runtime := &util.RuntimeOptions{}
+	headers := make(map[string]*string)
+	_result = &QueryModelbackProductextResponse{}
+	_body, _err := client.QueryModelbackProductextEx(request, headers, runtime)
+	if _err != nil {
+		return _result, _err
+	}
+	_result = _body
+	return _result, _err
+}
+
+// Description:
+//
+// Description: 调用该产品接口，实现模型回溯产品相关信息查询
+//
+// Summary: 调用该产品接口，实现模型回溯产品相关信息查询
+func (client *Client) QueryModelbackProductextEx(request *QueryModelbackProductextRequest, headers map[string]*string, runtime *util.RuntimeOptions) (_result *QueryModelbackProductextResponse, _err error) {
+	_err = util.ValidateModel(request)
+	if _err != nil {
+		return _result, _err
+	}
+	_result = &QueryModelbackProductextResponse{}
+	_body, _err := client.DoRequest(tea.String("1.0"), tea.String("antdigital.corlab.modelback.productext.query"), tea.String("HTTPS"), tea.String("POST"), tea.String("/gateway.do"), tea.ToMap(request), headers, runtime)
+	if _err != nil {
+		return _result, _err
+	}
+	_err = tea.Convert(_body, &_result)
+	return _result, _err
+}
+
+// Description:
+//
+// Description: 创建HTTP PUT提交的文件上传
+//
+// Summary: 文件上传创建
 func (client *Client) CreateAntcloudGatewayxFileUpload(request *CreateAntcloudGatewayxFileUploadRequest) (_result *CreateAntcloudGatewayxFileUploadResponse, _err error) {
 	runtime := &util.RuntimeOptions{}
 	headers := make(map[string]*string)
@@ -1336,10 +2036,11 @@ func (client *Client) CreateAntcloudGatewayxFileUpload(request *CreateAntcloudGa
 	return _result, _err
 }
 
-/**
- * Description: 创建HTTP PUT提交的文件上传
- * Summary: 文件上传创建
- */
+// Description:
+//
+// Description: 创建HTTP PUT提交的文件上传
+//
+// Summary: 文件上传创建
 func (client *Client) CreateAntcloudGatewayxFileUploadEx(request *CreateAntcloudGatewayxFileUploadRequest, headers map[string]*string, runtime *util.RuntimeOptions) (_result *CreateAntcloudGatewayxFileUploadResponse, _err error) {
 	_err = util.ValidateModel(request)
 	if _err != nil {
